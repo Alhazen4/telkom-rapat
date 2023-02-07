@@ -7,9 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Room
 {
-    static $roomsList =
+    private static $roomsList =
     [
         [
+            "id" => "R1",
             "name" => "Room 1",
             "capacity" => 10,
             "location" => "1st Floor",
@@ -17,6 +18,7 @@ class Room
             "photo" => "imageexample.png"
         ],
         [
+            "id" => "R2",
             "name" => "Room 2",
             "capacity" => 20,
             "location" => "2nd Floor",
@@ -24,6 +26,7 @@ class Room
             "photo" => "imageexample.png"
         ],
         [
+            "id" => "R3",
             "name" => "Room 3",
             "capacity" => 30,
             "location" => "3rd Floor",
@@ -37,7 +40,15 @@ class Room
         return self::$roomsList;
     }
 
-    public static function getRoom(room $room) {
+    // public static function find($id) {
+    //     $rooms = self::$roomsList;
+    //     $selectedRoom = [];
+    //     foreach ( $rooms as $room) {
+    //         if($room["id"] === $id) {
+    //             $selectedRoom = $room;
+    //         }
+    //     }
 
-    }
+    //     return $selectedRoom;
+    // }
 }

@@ -16,4 +16,8 @@ class RoomController extends Controller
 
         return view('dashboard', ["rooms" => Room::all()]);
     }
+
+    // public function getRoom($id) {
+    //     return view('dialog', ["selectedRoom" => Room::find($id)]);
+    // }
 }
