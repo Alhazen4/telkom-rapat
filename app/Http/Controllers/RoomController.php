@@ -11,13 +11,12 @@ class RoomController extends Controller
 {
     public function index()
     {
-        // $rooms = DB::table('rooms')->get();
-        // return view('dashboard', compact('rooms'));
-
-        return view('dashboard', ["rooms" => Room::all()]);
+        return view('components/dashboard', ["rooms" => Room::all()]);
     }
 
-    // public function getRoom($id) {
-    //     return view('dialog', ["selectedRoom" => Room::find($id)]);
-    // }
+    public function getRoom(Request $req) {
+        $id = $req->id;
+        $selectedRoom = Room::find($id);
+        return response()->json(['status_code' => '200', 'data' => $selectedRoom]);
+    }
 }
