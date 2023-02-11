@@ -13,8 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('requests', function (Blueprint $table) {
-            $table->id();
+        Schema::create('statuses', function (Blueprint $table) {
+            $table->id('id_status');
+            $table->string('status_name');
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('requests');
+        Schema::dropIfExists('statuses');
     }
 };

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\RequestorRoomController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoomController;
 
@@ -17,3 +18,7 @@ use App\Http\Controllers\RoomController;
 Route::get('/', [RoomController::class, 'index']);
 
 Route::get('/getRoom', [RoomController::class,'getRoom'])->name('room.getRoom');
+
+Route::post('/request/{id}', [RequestorRoomController::class, 'RequestorRoomController@store']);
+
+Route::get('/history', [RequestorRoomController::class, 'RequestorRoomController@show']);
