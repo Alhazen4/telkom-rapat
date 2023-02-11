@@ -112,7 +112,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kembali</button>
-                        <button type="button" data-bs-toggle="modal" data-bs-target="#roomReserv" class="btn btn-danger">Batalkan Pesanan</button>
+                        <button type="button" data-bs-toggle="modal" data-bs-target="" class="btn btn-danger">Batalkan Pesanan</button>
                     </div>
                 </div>
             </div>

@@ -10,7 +10,7 @@
                 <p class="card-text">Kapasitas: {{ $room["capacity"] }}</p>
                 <p class="card-text">Lokasi: {{ $room["location"] }}</p>
 
-                <a data-id="{{ $room["id"] }}" onclick="editTodo(event.target)" class="btn btn-info">Detail Ruangan</a>
+                <a data-id="{{ $room["id"] }}" onclick="editTodo(event.target)" class="btn btn-primary">Detail Ruangan</a>
             </div>
 
         </div>
@@ -54,6 +54,8 @@
                             <input type="text" class="form-control" id="inputUnit">
                             <label for="inputNoTelp" class="form-label">Nomor Telepon</label>
                             <input type="number" class="form-control" id="inputNoTelp">
+                            <label for="inputJmlPeserta" class="form-label">Estimasi Jumlah Peserta</label>
+                            <input type="number" class="form-control" id="inputJmlPeserta">
                         </form>
                     </div>
                     <div class="modal-footer">
