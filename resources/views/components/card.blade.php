@@ -56,6 +56,10 @@
                             <input type="number" class="form-control" id="inputNoTelp">
                             <label for="inputJmlPeserta" class="form-label">Estimasi Jumlah Peserta</label>
                             <input type="number" class="form-control" id="inputJmlPeserta">
+                            <label for="inputTglPesan" class="form-label">Tanggal Pesan</label>
+                            <input type="date" class="form-control" id="inputTglPesan">
+                            <label for="inputWktPesan" class="form-label">Waktu Pesan</label>
+                            <input type="time-local" class="form-control" id="inputWktPesan">
                         </form>
                     </div>
                     <div class="modal-footer">

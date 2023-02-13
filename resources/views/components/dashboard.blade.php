@@ -142,6 +142,7 @@
                     <option value="2">Maret</option>
                     <option value="3">April</option>
                 </select>
+                <label for="form-select">Pilih Tanggal</label>
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
                         <a class="nav-link active" data-bs-target="#1" data-bs-toggle="tab">1</a>
