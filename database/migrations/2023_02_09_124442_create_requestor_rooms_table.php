@@ -24,9 +24,11 @@ return new class extends Migration
             $table->string('unit');
             $table->string('telephone');
             $table->integer('total_participants');
-            $table->foreignIdFor(Room::class);
-            $table->foreignIdFor(Status::class);
+            $table->string('status');
+            $table->unsignedBigInteger('room_id');
             $table->timestamps();
+
+            $table->foreign('room_id')->references('id_rooms')->on('rooms')->onDelete('cascade');
         });
     }
 

@@ -16,11 +16,18 @@ class RequestorRoom extends Model
         'time',
         'unit',
         'telephone',
-        'rooms_id_rooms',
-        'status_id_status'
+        'status',
+        'room_id',
     ];
 
     protected $attributes = [
+        'total_participants' => 1,
         'status' => 1
     ];
+
+    public function Room()
+    {
+        return $this->belongsToMany(Room::class);
+    }
+
 }

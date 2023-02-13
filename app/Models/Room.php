@@ -16,4 +16,14 @@ class Room extends Model
         'facility',
         'contact'
     ];
+
+    public function RequestoRoom()
+    {
+        return $this->hasMany(RequestorRoom::class);
+    }
+
+    public function Image()
+    {
+        return $this->hasMany(Image::class);
+    }
 }

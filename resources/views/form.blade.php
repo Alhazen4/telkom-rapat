@@ -7,7 +7,13 @@
     <title>Form test</title>
 </head>
 <body>
-    <form action="/request" method="post">
+    @if(Session::has('success'))
+    {{Session::get('success')}}
+
+        
+    @endif
+    <form action="/request/1" method="post">
+        @csrf
         <label for="name">Name: </label>
         <input type="text" name="name" id="name">
         <label for="date">Date: </label>

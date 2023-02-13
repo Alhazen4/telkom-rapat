@@ -19,6 +19,8 @@ Route::get('/', [RoomController::class, 'index']);
 
 Route::get('/getRoom', [RoomController::class,'getRoom'])->name('room.getRoom');
 
-Route::post('/request/{id}', [RequestorRoomController::class, 'RequestorRoomController@store']);
+Route::get('/request', [RequestorRoomController::class, 'create'])->name('form.create');
+
+Route::post('/request/{id}', [RequestorRoomController::class, 'store']);
 
 Route::get('/history', [RequestorRoomController::class, 'RequestorRoomController@show']);

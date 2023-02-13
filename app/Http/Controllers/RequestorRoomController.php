@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Str;
 use App\Models\RequestorRoom;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class RequestorRoomController extends Controller
 {
@@ -13,9 +14,12 @@ class RequestorRoomController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(RequestorRoom $requestorRoom)
     {
         //
+        $show_request = $requestorRoom::all(['*']);
+
+        return view('components.dashboard', $show_request);
     }
 
     /**
@@ -27,7 +31,8 @@ class RequestorRoomController extends Controller
     {
         //
         
-
+        return view('form');
+        
     }
 
     /**
@@ -36,31 +41,40 @@ class RequestorRoomController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $id)
+    public function store(Request $request, Response $response, $id)
     {
         //
-
-        $request->validate([
-            'name_requestor' => 'required|string',
-            'date' => 'required|date',
+        // dd($id);
+        $validatedData = $request->validate([
+            'name' => 'required|string',
+            'date' => 'required',
             'time' => 'required',
             'unit' => 'required|string',
             'telephone' => 'required|string'
         ]);
+        // echo $validatedData['date'];
 
         $hex = Str::random(9);
         $book_number = '#' . $hex;
+        // dd($book_number);
 
         $request_form = RequestorRoom::create([
-            'order_number' => $book_number,
+            'order_number' =>$book_number,
             'name_requestor' => $request->input('name'),
             'date' => $request->input('date'),
             'time' => $request->input('time'),
             'unit' => $request->input('unit'),
             'telephone' => $request->input('telephone'),
-            'rooms_id_rooms' => $id,
-            'status_id_status' => 1
+            'room_id' => $id
         ]);
+        $check = gettype($request->input('time'));
+
+        
+        // dd($request->input('name'), $request->input('date'), $request->input('time'), $request->input('unit'), $request->input('telephone'), $check, $book_number);
+        
+
+
+        return redirect()->route("form.create")->with('success','sukses menambahkan');
     }
 
     /**
@@ -69,13 +83,11 @@ class RequestorRoomController extends Controller
      * @param  \App\Models\RequestorRoom  $requestorRoom
      * @return \Illuminate\Http\Response
      */
-    public function show(RequestorRoom $requestorRoom)
+    public function show()
     {
         //
 
-        $show_request = $requestorRoom::all(['*']);
 
-        return view('', $show_request);
     }
 
     /**
@@ -111,4 +123,8 @@ class RequestorRoomController extends Controller
     {
         //
     }
+
+    // public $middleware = [
+    //     \App\Http\Middleware\VerifyCsrfToken::class
+    // ];
 }

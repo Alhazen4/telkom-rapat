@@ -14,8 +14,8 @@ class Image extends Model
         'rooms_id_rooms'
     ];
 
-    public function rooms()
+    public function Room()
     {
-        return $this->hasMany(Room::class);
+        return $this->belongsToMany(Room::class);
     }
 }
