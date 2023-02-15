@@ -50,6 +50,7 @@ class RequestorRoomController extends Controller
             'date' => 'required',
             'time' => 'required',
             'unit' => 'required|string',
+            'participant' => 'required|integer',
             'telephone' => 'required|string'
         ]);
         // echo $validatedData['date'];
@@ -65,6 +66,7 @@ class RequestorRoomController extends Controller
             'time' => $request->input('time'),
             'unit' => $request->input('unit'),
             'telephone' => $request->input('telephone'),
+            'participant' => $request->input('participant'),
             'room_id' => $id
         ]);
         $check = gettype($request->input('time'));
