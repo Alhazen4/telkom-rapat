@@ -49,17 +49,17 @@
                     <div class="modal-body">
                         <form action="">
                             <label for="inputNama" class="form-label">Nama Pemesan</label>
-                            <input type="text" class="form-control" id="inputNama">
+                            <input type="text" class="form-control" id="inputNama" name="name">
                             <label for="inputUnit" class="form-label">Unit / Witel</label>
-                            <input type="text" class="form-control" id="inputUnit">
+                            <input type="text" class="form-control" id="inputUnit" name="unit">
                             <label for="inputNoTelp" class="form-label">Nomor Telepon</label>
-                            <input type="number" class="form-control" id="inputNoTelp">
+                            <input type="number" class="form-control" id="inputNoTelp" name="telephone">
                             <label for="inputJmlPeserta" class="form-label">Estimasi Jumlah Peserta</label>
-                            <input type="number" class="form-control" id="inputJmlPeserta">
+                            <input type="number" class="form-control" id="inputJmlPeserta" name="participant">
                             <label for="inputTglPesan" class="form-label">Tanggal Pesan</label>
-                            <input type="date" class="form-control" id="inputTglPesan">
+                            <input type="date" class="form-control" id="inputTglPesan" name="date">
                             <label for="inputWktPesan" class="form-label">Waktu Pesan</label>
-                            <input type="time-local" class="form-control" id="inputWktPesan">
+                            <input type="time-local" class="form-control" id="inputWktPesan" name="time">
                         </form>
                     </div>
                     <div class="modal-footer">

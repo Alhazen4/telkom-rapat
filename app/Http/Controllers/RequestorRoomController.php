@@ -30,9 +30,9 @@ class RequestorRoomController extends Controller
     public function create()
     {
         //
-        
+
         return view('form');
-        
+
     }
 
     /**
@@ -71,9 +71,9 @@ class RequestorRoomController extends Controller
         ]);
         $check = gettype($request->input('time'));
 
-        
+
         // dd($request->input('name'), $request->input('date'), $request->input('time'), $request->input('unit'), $request->input('telephone'), $check, $book_number);
-        
+
 
 
         return redirect()->route("form.create")->with('success','sukses menambahkan');
@@ -88,8 +88,6 @@ class RequestorRoomController extends Controller
     public function show()
     {
         //
-
-
     }
 
     /**
