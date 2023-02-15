@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Room;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class RoomController extends Controller
 {
@@ -47,6 +48,9 @@ class RoomController extends Controller
     public function show(Room $room)
     {
         //
+        $getRoom = Room::all(['*']);
+
+        return Response()->json($getRoom, 200)->getData();
     }
 
     /**
