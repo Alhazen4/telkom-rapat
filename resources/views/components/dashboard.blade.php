@@ -112,7 +112,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kembali</button>
-                        <button type="button" data-bs-toggle="modal" data-bs-target="#roomReserv" class="btn btn-danger">Batalkan Pesanan</button>
+                        <button type="button" data-bs-toggle="modal" data-bs-target="" class="btn btn-danger">Batalkan Pesanan</button>
                     </div>
                 </div>
             </div>
@@ -142,6 +142,7 @@
                     <option value="2">Maret</option>
                     <option value="3">April</option>
                 </select>
+                <label for="form-select">Pilih Tanggal</label>
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
                         <a class="nav-link active" data-bs-target="#1" data-bs-toggle="tab">1</a>
