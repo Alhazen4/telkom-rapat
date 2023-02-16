@@ -9,8 +9,8 @@
                 <h5 class="card-title">{{ $room["name"] }}</h5>
                 <p class="card-text">Kapasitas: {{ $room["capacity"] }}</p>
                 <p class="card-text">Lokasi: {{ $room["location"] }}</p>
-
-                <a data-id="{{ $room["id"] }}" onclick="editTodo(event.target)" class="btn btn-primary">Detail Ruangan</a>
+                <p class="card-text">id_room: {{ $room["id_rooms"] }}</p>
+                <a data-id="{{ $room["id_rooms"] }}" onclick="editTodo(event.target)" class="btn btn-primary">Detail Ruangan</a>
             </div>
 
         </div>
@@ -25,7 +25,7 @@
                     <div class="modal-body">
                         <img class="card-img" id="roomPhoto" alt="...">
                         <div class="card-body">
-                            <h5 id="roomName" class="card-title"></h5>
+                            <h5 id="roomName" class="card-title">{{ $room['name']}}</h5>
                             <p id="roomDetail" class="card-text">Detail: </p>
                             <p id="roomCapacity" class="card-text">Kapasitas: </p>
                             <p id="roomLocation" class="card-text">Lokasi: </p>
@@ -33,7 +33,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kembali</button>
-                        <button type="button" data-bs-toggle="modal" data-bs-target="#roomReserv" class="btn btn-primary">Pesan Ruangan Ini</button>
+                        <button type="button" data-bs-toggle="modal" data-bs-target="#roomReserv" class="btn btn-primary" id="addButton">Pesan Ruangan Ini</button>
                     </div>
                 </div>
             </div>
@@ -47,24 +47,25 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="">
+                        <form action="POST" action="/request">
+                            @csrf
                             <label for="inputNama" class="form-label">Nama Pemesan</label>
-                            <input type="text" class="form-control" id="inputNama" name="name">
+                            <input type="text" class="form-control" id="inputNama">
                             <label for="inputUnit" class="form-label">Unit / Witel</label>
-                            <input type="text" class="form-control" id="inputUnit" name="unit">
+                            <input type="text" class="form-control" id="inputUnit">
                             <label for="inputNoTelp" class="form-label">Nomor Telepon</label>
-                            <input type="number" class="form-control" id="inputNoTelp" name="telephone">
+                            <input type="number" class="form-control" id="inputNoTelp">
                             <label for="inputJmlPeserta" class="form-label">Estimasi Jumlah Peserta</label>
-                            <input type="number" class="form-control" id="inputJmlPeserta" name="participant">
+                            <input type="number" class="form-control" id="inputJmlPeserta">
                             <label for="inputTglPesan" class="form-label">Tanggal Pesan</label>
-                            <input type="date" class="form-control" id="inputTglPesan" name="date">
+                            <input type="date" class="form-control" id="inputTglPesan">
                             <label for="inputWktPesan" class="form-label">Waktu Pesan</label>
-                            <input type="time-local" class="form-control" id="inputWktPesan" name="time">
+                            <input type="time" class="form-control" id="inputWktPesan">
                         </form>
                     </div>
                     <div class="modal-footer">
                         <button data-bs-toggle="modal" data-bs-target="#roomModal" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kembali</button>
-                        <button type="button" class="btn btn-primary">Pesan Ruangan Ini</button>
+                        <button type="submit" class="btn btn-primary">Pesan Ruangan Ini</button>
                     </div>
                 </div>
             </div>
@@ -75,24 +76,65 @@
 <script>
     function editTodo(e) {
         let id  = $(e).data("id");
+        console.log(id);
         $.ajax({
             url: "{{ route('room.getRoom') }}",
             type: 'GET',
-            data: {"id": id},
+            data: {"id_rooms": id},
             success: function(result){
+                console.log(result)
                 // Use below code if we want to access the images inside public/images
                 // document.getElementById('roomPhoto').src = `{{ asset("images/` + result.data.photo + `")}}`;
 
                 // Use below code if we want to get the images from API url
-                document.getElementById('roomPhoto').src = `https://source.unsplash.com/${result.data.photo}`;
+                document.getElementById('roomPhoto').src = `https://source.unsplash.com/${result.data[0].photo}`;
 
-                document.getElementById('roomName').innerHTML = result.data.name;
-                document.getElementById('roomDetail').innerHTML = "Detail:<br>" + result.data.detail;
-                document.getElementById('roomCapacity').innerHTML = "Kapasitas:\n" + result.data.capacity;
-                document.getElementById('roomLocation').innerHTML = "Lokasi:\n" + result.data.location;
+                document.getElementById('roomName').innerHTML = result.data[0].name;
+                document.getElementById('roomDetail').innerHTML = "Detail:<br>" + result.data[0].facility;
+                document.getElementById('roomCapacity').innerHTML = "Kapasitas:\n" + result.data[0].capacity;
+                document.getElementById('roomLocation').innerHTML = "Lokasi:\n" + result.data[0].location;
             }
         });
         $('#roomModal').modal('show');
 
+
+        $('#roomReserv').on('click', '.btn-primary', function() {
+        var nama = $('#inputNama').val();
+        var unit = $('#inputUnit').val();
+        var noTelp = $('#inputNoTelp').val();
+        var jmlPeserta = $('#inputJmlPeserta').val();
+        var tglPesan = $('#inputTglPesan').val();
+        var wktPesan = $('#inputWktPesan').val();
+
+        console.log(typeof(nama))
+        console.log(typeof(unit))
+        console.log(typeof(noTelp))
+        console.log(typeof(jmlPeserta))
+        console.log(typeof(tglPesan))
+        console.log(typeof(wktPesan))
+
+        $.ajax({
+            url: '{{route('form.store')}}',
+            type: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                name: nama,
+                unit: unit,
+                telephone: noTelp,
+                date: tglPesan,
+                time: wktPesan,
+                total_participants: jmlPeserta,
+            },
+            success: function() {
+                alert('Reservasi berhasil dilakukan.');
+                $('#roomReserv').modal('hide');
+            },
+            error: function() {
+                alert('Terjadi kesalahan saat melakukan reservasi.');
+            }
+        });
+    });
     }
     </script>

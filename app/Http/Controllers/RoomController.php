@@ -45,12 +45,15 @@ class RoomController extends Controller
      * @param  \App\Models\Room  $room
      * @return \Illuminate\Http\Response
      */
-    public function show(Room $room)
+    public function show()
     {
         //
         $getRoom = Room::all(['*']);
 
-        return Response()->json($getRoom, 200)->getData();
+        // dd($getRoom->all());
+        return $getRoom->all();
+
+        // return Response()->json($getRoom, 200)->getData();
     }
 
     /**
@@ -88,7 +91,7 @@ class RoomController extends Controller
     }
 
     public function getRoom(Request $req) {
-        $id = $req->id;
+        $id = $req->id_rooms;
         // $selectedRoom = Room::find($id);
         $selectedRoom = Room::where('id_rooms', $id)->get();
 

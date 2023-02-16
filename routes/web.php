@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RequestorRoomController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoomController;
+use App\Models\RequestorRoom;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,12 +17,15 @@ use App\Http\Controllers\RoomController;
 |
 */
 
-Route::get('/', [RoomController::class, 'index']);
+Route::get('/', [RoomController::class, 'show']);
+// Route::get('/', [RequestorRoomController::class, 'index']);
 
 Route::get('/getRoom', [RoomController::class,'getRoom'])->name('room.getRoom');
 
 Route::get('/request', [RequestorRoomController::class, 'create'])->name('form.create');
 
-Route::post('/request/{id}', [RequestorRoomController::class, 'store']);
+Route::post('/request', [RequestorRoomController::class, 'store'])->name('form.store');
 
-Route::get('/history', [RequestorRoomController::class, 'RequestorRoomController@show']);
+Route::get('/history', [RequestorRoomController::class, 'index']);
+
+Route::get('/test', [DashboardController::class, 'show']);
