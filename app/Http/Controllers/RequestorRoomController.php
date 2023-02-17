@@ -14,12 +14,12 @@ class RequestorRoomController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(RequestorRoom $requestorRoom)
+    public function index()
     {
         //
-        $show_request = $requestorRoom::all(['*']);
+        $show_request = RequestorRoom::all(['*']);
 
-        return view('components.dashboard', $show_request);
+        return $show_request->all();
     }
 
     /**
@@ -41,18 +41,18 @@ class RequestorRoomController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Response $response, $id)
+    public function store(Request $request, Response $response)
     {
+        // dd($request->all());
         //
-        // dd($id);
-        $validatedData = $request->validate([
-            'name' => 'required|string',
-            'date' => 'required',
-            'time' => 'required',
-            'unit' => 'required|string',
-            'participant' => 'required|integer',
-            'telephone' => 'required|string'
-        ]);
+        // $validatedData = $request->validate([
+        //     'name' => 'required|string',
+        //     'date' => 'required',
+        //     'time' => 'required',
+        //     'unit' => 'required|string',
+        //     'participant' => 'required|integer',
+        //     'telephone' => 'required|string'
+        // ]);
         // echo $validatedData['date'];
 
         $hex = Str::random(9);
@@ -60,23 +60,22 @@ class RequestorRoomController extends Controller
         // dd($book_number);
 
         $request_form = RequestorRoom::create([
-            'order_number' =>$book_number,
-            'name_requestor' => $request->input('name'),
-            'date' => $request->input('date'),
-            'time' => $request->input('time'),
-            'unit' => $request->input('unit'),
-            'telephone' => $request->input('telephone'),
-            'participant' => $request->input('participant'),
-            'room_id' => $id
+            'order_number' => $book_number,
+            'room_id' => $request->input('inputIdRoom'),
+            'name_requestor' => $request->input('inputNama'),
+            'date' => $request->input('inputTglPesan'),
+            'time' => $request->input('inputWktMulai'),
+            'unit' => $request->input('inputUnit'),
+            'telephone' => $request->input('inputNoTelp'),
+            'participant' => $request->input('inputJmlPeserta'),
         ]);
-        $check = gettype($request->input('time'));
 
+        // $check = gettype($request->input('time'));
 
-        // dd($request->input('name'), $request->input('date'), $request->input('time'), $request->input('unit'), $request->input('telephone'), $check, $book_number);
-
-
-
-        return redirect()->route("form.create")->with('success','sukses menambahkan');
+        return redirect()->route("test");
+        // return response()->json([
+        //     'success' => true,
+        // ]);
     }
 
     /**
