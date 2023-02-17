@@ -28,4 +28,4 @@ Route::post('/request', [RequestorRoomController::class, 'store'])->name('form.s
 
 Route::get('/history', [RequestorRoomController::class, 'index']);
 
-Route::get('/test', [DashboardController::class, 'show']);
+Route::get('/test', [DashboardController::class, 'show'])->name('test');

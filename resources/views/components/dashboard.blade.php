@@ -137,34 +137,24 @@
         <div id="tabs">
             <h3 class="section-title">Data Pemesanan</h3>
             <div class="div-tabs">
-                <label for="form-select">Pilih Bulan</label>
-                <select name="form-select" class="form-select" aria-label="Default select example">
-                    <option selected>Januari</option>
-                    <option value="1">Februari</option>
-                    <option value="2">Maret</option>
-                    <option value="3">April</option>
-                </select>
-                <label for="form-select">Pilih Tanggal</label>
+                <div class="wrapper" style="display: flex; flex-direction:row;">
+                    <label for="form-select">Pilih Bulan</label>
+                    <select name="form-select" class="form-select" aria-label="Default select example">
+                        <option selected>Januari</option>
+                        <option value="1">Februari</option>
+                        <option value="2">Maret</option>
+                        <option value="3">April</option>
+                    </select>
+                    <label for="form-select">Pilih Tanggal</label>
+                    <select name="form-select" class="form-select" aria-label="Default select example">
+                        @for ($i = 1; $i <= 31; $i++)
+                            <option selected>{{ $i }}</option>
+                        @endfor
+                    </select>
+                </div>
+                {{-- <label for="form-select">Pilih Tanggal</label>
                 <ul class="nav nav-tabs">
-                    @for ($i = 1; $i <= 30; $i++)
-                        <li class="nav-item">
-                            <a class="nav-link active" data-bs-target="#1" data-bs-toggle="tab" href="http://127.0.0.1:8000/test#div-card/1">{{$i}}</a>
-                        </li>
-                    @endfor
-
-                    {{-- <li class="nav-item">
-                        <a class="nav-link" data-bs-target="#2" data-bs-toggle="tab">2</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-bs-target="#3" data-bs-toggle="tab">3</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-bs-target="#4" data-bs-toggle="tab">4</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-bs-target="#5" data-bs-toggle="tab">5</a>
-                    </li> --}}
-                </ul>
+                </ul> --}}
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane fade show active" id="1">
                         <table class="table">

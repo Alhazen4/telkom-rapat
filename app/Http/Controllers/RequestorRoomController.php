@@ -60,14 +60,14 @@ class RequestorRoomController extends Controller
         // dd($book_number);
 
         $request_form = RequestorRoom::create([
-            'order_number' =>$book_number,
+            'order_number' => $book_number,
+            'room_id' => $request->input('inputIdRoom'),
             'name_requestor' => $request->input('inputNama'),
             'date' => $request->input('inputTglPesan'),
             'time' => $request->input('inputWktMulai'),
             'unit' => $request->input('inputUnit'),
             'telephone' => $request->input('inputNoTelp'),
             'participant' => $request->input('inputJmlPeserta'),
-            'room_id' => 1
         ]);
 
         // $check = gettype($request->input('time'));
