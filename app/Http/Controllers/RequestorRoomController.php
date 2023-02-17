@@ -41,10 +41,10 @@ class RequestorRoomController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Response $response, $id)
+    public function store(Request $request, Response $response)
     {
+        // dd($request->all());
         //
-        // dd($id);
         // $validatedData = $request->validate([
         //     'name' => 'required|string',
         //     'date' => 'required',
@@ -61,25 +61,21 @@ class RequestorRoomController extends Controller
 
         $request_form = RequestorRoom::create([
             'order_number' =>$book_number,
-            'name_requestor' => $request->input('name'),
-            'date' => $request->input('date'),
-            'time' => $request->input('time'),
-            'unit' => $request->input('unit'),
-            'telephone' => $request->input('telephone'),
-            'participant' => $request->input('participant'),
-            'room_id' => $id
+            'name_requestor' => $request->input('inputNama'),
+            'date' => $request->input('inputTglPesan'),
+            'time' => $request->input('inputWktMulai'),
+            'unit' => $request->input('inputUnit'),
+            'telephone' => $request->input('inputNoTelp'),
+            'participant' => $request->input('inputJmlPeserta'),
+            'room_id' => 1
         ]);
+
         // $check = gettype($request->input('time'));
 
-
-        // dd($request->input('name'), $request->input('date'), $request->input('time'), $request->input('unit'), $request->input('telephone'), $check, $book_number);
-
-
-
-        // return redirect()->route("form.create")->with('success','sukses menambahkan');
-        return response()->json([
-            'success' => true,
-        ]);
+        return redirect()->route("test");
+        // return response()->json([
+        //     'success' => true,
+        // ]);
     }
 
     /**
