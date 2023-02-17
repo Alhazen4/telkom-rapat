@@ -3,6 +3,7 @@
 use App\Http\Controllers\RequestorRoomController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoomController;
+use Illuminate\Support\Facades\Http;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,3 +25,11 @@ Route::get('/request', [RequestorRoomController::class, 'create'])->name('form.c
 Route::post('/request/{id}', [RequestorRoomController::class, 'store']);
 
 Route::get('/history', [RequestorRoomController::class, 'RequestorRoomController@show']);
+
+Route::get('/waclient', function() {
+    $res = Http::get('http://localhost:1221/waClient');
+    $data = json_decode($res->body(), true);
+    return view('components/waclient', [
+        'res' => $data,
+    ]);
+});
