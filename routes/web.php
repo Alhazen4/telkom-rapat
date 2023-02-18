@@ -1,11 +1,12 @@
 <?php
 
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\RequestorRoomController;
+use App\Models\RequestorRoom;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoomController;
-use Illuminate\Support\Facades\Http;
-use App\Models\RequestorRoom;
+use App\Http\Controllers\VerifController;
+use App\Http\Controllers\WaClientController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\RequestorRoomController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,8 +19,7 @@ use App\Models\RequestorRoom;
 |
 */
 
-Route::get('/', [RoomController::class, 'show']);
-// Route::get('/', [RequestorRoomController::class, 'index']);
+Route::get('/', [DashboardController::class, 'show'])->name('dashboard');
 
 Route::get('/getRoom', [RoomController::class,'getRoom'])->name('room.getRoom');
 
@@ -29,12 +29,6 @@ Route::post('/request', [RequestorRoomController::class, 'store'])->name('form.s
 
 Route::get('/history', [RequestorRoomController::class, 'index']);
 
-Route::get('/test', [DashboardController::class, 'show'])->name('test');
+Route::get('/waclient', [WaClientController::class, 'getQrCode']);
 
-Route::get('/waclient', function() {
-    $res = Http::get('http://localhost:1221/waClient');
-    $data = json_decode($res->body(), true);
-    return view('components/waclient', [
-        'res' => $data,
-    ]);
-});
+Route::get('/verif', [VerifController::class, 'index']);

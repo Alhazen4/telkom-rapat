@@ -72,7 +72,7 @@ class RequestorRoomController extends Controller
 
         // $check = gettype($request->input('time'));
 
-        return redirect()->route("test");
+        return redirect()->route("dashboard");
         // return response()->json([
         //     'success' => true,
         // ]);
