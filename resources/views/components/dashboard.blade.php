@@ -137,24 +137,33 @@
         <div id="tabs">
             <h3 class="section-title">Data Pemesanan</h3>
             <div class="div-tabs">
-                <div class="wrapper" style="display: flex; flex-direction:row;">
-                    <label for="form-select">Pilih Bulan</label>
-                    <select name="form-select" class="form-select" aria-label="Default select example">
-                        <option selected>Januari</option>
-                        <option value="1">Februari</option>
-                        <option value="2">Maret</option>
-                        <option value="3">April</option>
-                    </select>
-                    <label for="form-select">Pilih Tanggal</label>
-                    <select name="form-select" class="form-select" aria-label="Default select example">
-                        @for ($i = 1; $i <= 31; $i++)
-                            <option selected>{{ $i }}</option>
-                        @endfor
-                    </select>
+                <div class="wrapper" style="display: flex; flex-direction:row; gap: 10px;">
+                    <div class="row-wrapper" style="display: flex; flex-direction:column;">
+                        <label for="form-select">Pilih Tahun</label>
+                        <select name="form-select" class="form-select" aria-label="Default select example">
+                            @for ($i = 2023; $i <= 2030; $i++)
+                                <option>{{ $i }}</option>
+                            @endfor
+                        </select>
+                    </div>
+                    <div class="row-wrapper" style="display: flex; flex-direction:column;">
+                        <label for="form-select">Pilih Bulan</label>
+                        <select name="form-select" class="form-select" aria-label="Default select example">
+                            <option>Januari</option>
+                            <option value="1">Februari</option>
+                            <option value="2">Maret</option>
+                            <option value="3">April</option>
+                        </select>
+                    </div>
+                    <div class="row-wrapper" style="display: flex; flex-direction:column;">
+                        <label for="form-select">Pilih Tanggal</label>
+                        <select name="form-select" class="form-select" aria-label="Default select example">
+                            @for ($i = 1; $i <= 31; $i++)
+                                <option>{{ $i }}</option>
+                            @endfor
+                        </select>
+                    </div>
                 </div>
-                {{-- <label for="form-select">Pilih Tanggal</label>
-                <ul class="nav nav-tabs">
-                </ul> --}}
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane fade show active" id="1">
                         <table class="table">
@@ -188,42 +197,6 @@
                                     </tr>
                                 @endfor --}}
                                 {{-- @endforeach --}}
-
-                                {{-- <tr>
-                                    <th scope="row">2</th>
-                                    <td>Ruangan 2</td>
-                                    <td>Salim</td>
-                                    <td>021</td>
-                                    <td>07.00-10.00</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">3</th>
-                                    <td>Ruangan 3</td>
-                                    <td>Hajar</td>
-                                    <td>021</td>
-                                    <td>07.00-10.00</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">4</th>
-                                    <td>Ruangan 4</td>
-                                    <td>Dewantara</td>
-                                    <td>021</td>
-                                    <td>07.00-10.00</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">5</th>
-                                    <td>Ruangan 5</td>
-                                    <td>John</td>
-                                    <td>021</td>
-                                    <td>07.00-10.00</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>Ruangan 1</td>
-                                    <td>Agus</td>
-                                    <td>021</td>
-                                    <td>07.00-10.00</td>
-                                </tr> --}}
                             </tbody>
                         </table>
                     </div>

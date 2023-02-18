@@ -10,7 +10,10 @@
                 <p class="card-text">Kapasitas: {{ $room["capacity"] }}</p>
                 <p class="card-text">Lokasi: {{ $room["location"] }}</p>
                 {{-- <p class="card-text">id_room: {{ $room["id_rooms"] }}</p> --}}
-                <a data-id="{{ $room["id_rooms"] }}" onclick="showRoomCard(event.target)" class="btn btn-primary">Detail Ruangan</a>
+                <div style="display: flex; justify-content:space-between;">
+                    <a data-id="{{ $room["id_rooms"] }}" onclick="detailRoom(event.target)" class="btn btn-primary">Detail Ruangan</a>
+                    <a data-id="{{ $room["id_rooms"] }}" onclick="reserveRoom(event.target)" class="btn btn-success">Pesan Ruangan</a>
+                </div>
             </div>
 
         </div>
@@ -79,7 +82,7 @@
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
-    function showRoomCard(e) {
+    function detailRoom(e) {
         let id  = $(e).data("id");
         console.log(id);
         $.ajax({
@@ -105,8 +108,10 @@
 
     }
 
-    $( "#roomReserv" ).on('shown.bs.modal', function(){
-        let roomReservId = $('#roomReserv').attr("data-id");
-        $("#inputIdRoom").attr("value", roomReservId);
-    });
+    function reserveRoom(e) {
+        let id  = $(e).data("id");
+        $("#inputIdRoom").attr("value", id);
+        $('#roomReserv').modal('show');
+    }
+
     </script>
