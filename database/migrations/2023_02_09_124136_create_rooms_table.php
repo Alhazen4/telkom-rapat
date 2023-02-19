@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->integer('capacity');
             $table->string('location');
-            $table->text('facility');
+            $table->json('facility');
             $table->string('contact');
             $table->timestamps();
         });

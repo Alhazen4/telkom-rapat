@@ -44,6 +44,7 @@ class RequestorRoomController extends Controller
     public function store(Request $request, Response $response)
     {
         // dd($request->all());
+        // var_dump($request->all());
         //
         // $validatedData = $request->validate([
         //     'name' => 'required|string',
@@ -60,7 +61,7 @@ class RequestorRoomController extends Controller
         // dd($book_number);
 
         $request_form = RequestorRoom::create([
-            'order_number' => $book_number,
+            'booking_code' => $book_number,
             'room_id' => $request->input('inputIdRoom'),
             'name_requestor' => $request->input('inputNama'),
             'date' => $request->input('inputTglPesan'),
@@ -72,10 +73,11 @@ class RequestorRoomController extends Controller
 
         // $check = gettype($request->input('time'));
 
-        return redirect()->route("dashboard");
+        // return redirect()->route("dashboard");
         // return response()->json([
         //     'success' => true,
         // ]);
+        return response()->json(['data' => $request_form]);
     }
 
     /**

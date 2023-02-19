@@ -17,7 +17,7 @@ return new class extends Migration
     {
         Schema::create('requestor_rooms', function (Blueprint $table) {
             $table->id('id_requests');
-            $table->string('booking_code');
+            $table->string('order_number');
             $table->string('name_requestor');
             $table->date('date');
             $table->time('time');

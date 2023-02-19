@@ -10,7 +10,7 @@ class RequestorRoom extends Model
     use HasFactory;
 
     protected $fillable = [
-        'order_number',
+        'booking_code',
         'name_requestor',
         'date',
         'time',
