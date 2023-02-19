@@ -1,3 +1,4 @@
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <body>
     <div class="card w-100">
         <img class="card-img" src={{ "https://source.unsplash.com/" . $room["image"] }} alt="...">
@@ -50,7 +51,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form id="formid" method="post" action="{{ url('/request') }}">
+                        <form id="formId" method="post" action="{{ url('/request') }}">
                             @csrf
                             <label for="inputIdroom" class="form-label">ID Room</label>
                             <input type="text" class="form-control" id="inputIdRoom" name="inputIdRoom" readonly>
@@ -73,7 +74,25 @@
                                 <button data-bs-toggle="modal" data-bs-target="#roomModal" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kembali</button>
                                 <button type="submit" class="btn btn-primary">Pesan Ruangan Ini</button>
                             </div>
-                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="reserveSuccess" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Pemesanan Berhasil!</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                    <p>Booking Code Anda:</p>
+                    <h2 id="bookingCode"></h2>
+                    <h5>Harap simpan kode pemesanan ini untuk verifikasi atau melakukan pembatalan.</h5>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center">
+                        <button onclick="backSuccess()" type="button" class="btn btn-secondary">Kembali</button>
                     </div>
                 </div>
             </div>
@@ -114,4 +133,27 @@
         $('#roomReserv').modal('show');
     }
 
+    // this is the id of the form
+    $("#formId").submit(function(e) {
+    e.preventDefault(); // avoid to execute the actual submit of the form.
+    var form = $(this);
+    var actionUrl = form.attr('action');
+        $.ajax({
+            type: "POST",
+            url: actionUrl,
+            data: form.serialize(), // serializes the form's elements.
+            success: function(data)
+            {
+                console.log(data.data.booking_code); // show response from the php script.
+                $("#bookingCode").html(data.data.booking_code);
+                $('#roomReserv').modal('toggle');
+                $('#reserveSuccess').modal('show');
+            }
+        });
+    });
+
+    function backSuccess() {
+        $('#reserveSuccess').modal('toggle');
+        location.reload();
+    }
     </script>
