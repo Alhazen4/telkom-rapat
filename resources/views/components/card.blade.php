@@ -10,6 +10,7 @@
                 <h5 class="card-title">{{ $room["name"] }}</h5>
                 <p class="card-text">Kapasitas: {{ $room["capacity"] }}</p>
                 <p class="card-text">Lokasi: {{ $room["location"] }}</p>
+                <p class="card-text">Kontak PJ Ruangan: {{ $room["contact"] }}</p>
                 {{-- <p class="card-text">id_room: {{ $room["id_rooms"] }}</p> --}}
                 <div style="display: flex; justify-content:space-between;">
                     <a data-id="{{ $room["id_rooms"] }}" onclick="detailRoom(event.target)" class="btn btn-primary">Detail Ruangan</a>
@@ -30,20 +31,21 @@
                         <img class="card-img" id="roomPhoto" alt="...">
                         <div class="card-body">
                             <h5 id="roomName" class="card-title"></h5>
-                            <p id="roomDetail" class="card-text">Detail: </p>
-                            <p id="roomCapacity" class="card-text">Kapasitas: </p>
-                            <p id="roomLocation" class="card-text">Lokasi: </p>
+                            <p id="roomDetail" class="card-text"></p>
+                            <p id="roomCapacity" class="card-text"></p>
+                            <p id="roomLocation" class="card-text"></p>
+                            <p id="roomContact" class="card-text"></p>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kembali</button>
-                        <button type="button" data-bs-toggle="modal" data-bs-target="#roomReserv" class="btn btn-primary" id="addButton">Pesan Ruangan Ini</button>
+                        <button type="button" data-bs-toggle="modal" data-bs-target="#roomReserve" class="btn btn-primary" id="addButton">Pesan Ruangan Ini</button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="modal fade" id="roomReserv" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="roomReserve" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -71,7 +73,7 @@
                             <input type="time" class="form-control" id="inputWktAkhir" name="inputWktAkhir">
 
                             <div class="modal-footer">
-                                <button data-bs-toggle="modal" data-bs-target="#roomModal" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kembali</button>
+                                <button onclick="backReserve()" type="button" class="btn btn-secondary">Kembali</button>
                                 <button type="submit" class="btn btn-primary">Pesan Ruangan Ini</button>
                             </div>
                     </div>
@@ -79,7 +81,7 @@
             </div>
         </div>
 
-        <div class="modal fade" id="reserveSuccess" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="reserveSuccess" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -92,7 +94,7 @@
                     <h5>Harap simpan kode pemesanan ini untuk verifikasi atau melakukan pembatalan.</h5>
                     </div>
                     <div class="modal-footer d-flex justify-content-center">
-                        <button onclick="backSuccess()" type="button" class="btn btn-secondary">Kembali</button>
+                        <button onclick="backSuccess()" type="button" class="btn btn-success">Saya Mengerti</button>
                     </div>
                 </div>
             </div>
@@ -101,6 +103,7 @@
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
+    let global_adminPhone;
     function detailRoom(e) {
         let id  = $(e).data("id");
         console.log(id);
@@ -120,7 +123,8 @@
                 document.getElementById('roomDetail').innerHTML = "Detail:<br>" + result.data[0].facility;
                 document.getElementById('roomCapacity').innerHTML = "Kapasitas:\n" + result.data[0].capacity;
                 document.getElementById('roomLocation').innerHTML = "Lokasi:\n" + result.data[0].location;
-                $('#roomReserv').attr('data-id', `${result.data[0].id_rooms}`);
+                document.getElementById('roomContact').innerHTML = "Kontak:\n" + result.data[0].contact;
+                $('#roomReserve').attr('data-id', `${result.data[0].id_rooms}`);
             }
         });
         $('#roomModal').modal('show');
@@ -129,28 +133,84 @@
 
     function reserveRoom(e) {
         let id  = $(e).data("id");
+        $.ajax({
+            url: "{{ route('room.getRoom') }}",
+            type: 'GET',
+            data: {"id_rooms": id},
+            success: function(result){
+                global_adminPhone = result.data[0].contact;
+            }
+        });
         $("#inputIdRoom").attr("value", id);
-        $('#roomReserv').modal('show');
+        $('#roomReserve').modal('show');
     }
 
     // this is the id of the form
     $("#formId").submit(function(e) {
     e.preventDefault(); // avoid to execute the actual submit of the form.
-    var form = $(this);
-    var actionUrl = form.attr('action');
+    let form = $(this);
+
+    let inputNoTelp = $("#inputNoTelp").val();
+    // let noTelpAdmin = QueryResult
+    if (inputNoTelp[0] === "0") {
+        inputNoTelp = "62" + inputNoTelp.slice(1);
+    }
+
+    let actionUrl = form.attr('action');
         $.ajax({
             type: "POST",
             url: actionUrl,
             data: form.serialize(), // serializes the form's elements.
             success: function(data)
             {
-                console.log(data.data.booking_code); // show response from the php script.
-                $("#bookingCode").html(data.data.booking_code);
-                $('#roomReserv').modal('toggle');
+                let booking_code = data.data.booking_code;
+                // Send WA and the booking_code to requestor.
+                $.ajax({
+                    type: "POST",
+                    url: 'http://localhost:1221/sendWa',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify({
+                        noTelp: inputNoTelp,
+                        message: `Pesanan Anda dengan kode *${booking_code}* sudah terkirim ke admin untuk verifikasi.\n\nHarap menunggu sampai admin memverifikasi pesanan Anda!\n\nTerima kasih!\n\n_(Pesan ini berasal dari bot server, harap tidak membalasnya.)_`
+                    }),
+                    success: function(data) {
+                        console.log('Message sent successfully!');
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                })
+
+                // Send WA and the booking_code to room admin.
+                let urlVerif = `https://localhost:8000/${booking_code}`;
+                $.ajax({
+                    type: "POST",
+                    url: 'http://localhost:1221/sendWaVerif',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify({
+                        noTelp: global_adminPhone,
+                        // noTelp: '6281291572472',
+                        // noTelp: '6287870539398',
+                        message: `Pesanan dengan kode *${booking_code}* menunggu verifikasi Anda.\n\nKlik link dibawah ini untuk memverifikasi pesanan tersebut\n\n ${urlVerif} \n\nTerima kasih!\n\n_(Jika link tidak aktif (tidak bisa ditekan), balas chat ini dengan kata !aktifkan)_`
+                    }),
+                    success: function(data) {
+                        console.log('Message sent successfully!');
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                })
+
+                $("#bookingCode").html(booking_code);
+                $('#roomReserve').modal('toggle');
                 $('#reserveSuccess').modal('show');
             }
         });
     });
+
+    function backReserve() {
+        $('#roomReserve').modal('toggle');
+    }
 
     function backSuccess() {
         $('#reserveSuccess').modal('toggle');
