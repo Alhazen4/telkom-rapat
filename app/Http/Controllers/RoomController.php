@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Image;
 use App\Models\Room;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -47,12 +48,11 @@ class RoomController extends Controller
      */
     public function show()
     {
-        //
-        $getRoom = Room::all(['*']);
+        $rooms = Room::with('image')->get();
 
-        // dd($getRoom->all());
-        return $getRoom->all();
+        // echo 'test';
 
+        return $rooms;
         // return Response()->json($getRoom, 200)->getData();
     }
 

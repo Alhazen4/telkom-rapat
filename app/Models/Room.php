@@ -17,13 +17,13 @@ class Room extends Model
         'contact'
     ];
 
-    public function RequestoRoom()
+    public function requestRoom()
     {
-        return $this->hasMany(RequestorRoom::class);
+        return $this->hasMany(RequestorRoom::class, 'id_rooms');
     }
 
-    public function Image()
+    public function image()
     {
-        return $this->hasMany(Image::class);
+        return $this->hasMany(Image::class, 'id_rooms');
     }
 }
