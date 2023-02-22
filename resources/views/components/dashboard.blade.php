@@ -173,7 +173,7 @@
                                 @for ($i = 0; $i < count($requests); $i++)
                                     <tr>
                                         <th scope="row">{{ $i + 1 }}</th>
-                                        <td>{{ $requests[$i]->room_id }}</td>
+                                        <td>{{ $requests[$i]->name }}</td>
                                         <td>{{ $requests[$i]->name_requestor }}</td>
                                         <td>{{ $requests[$i]->telephone }}</td>
                                         <td>{{ $requests[$i]->time }}</td>

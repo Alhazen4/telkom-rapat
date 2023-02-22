@@ -19,21 +19,28 @@ class RequestorRoomController extends Controller
     public function index()
     {
         //
-        $show_request = RequestorRoom::all(['*']);
+        // $show_request = RequestorRoom::all(['*']);
         // $test = Room::with(['requestRoom' => function ($query) {
         //     $query->where('date', '=', '2023-02-22');
         // }])->get();
-        $test = Room::with(['requestRoom' => function ($query) {
-            $query->where('date', '=', '2023-02-22');
-        }])->get();
+        // $test = Room::with(['requestRoom' => function ($query) {
+        //     $query->where('date', '=', '2023-02-22');
+        // }])->get();
 
-        $tableBData = DB::table('requestor_rooms')
-                ->join('rooms', 'requestor_rooms.id_rooms', '=', 'rooms.id')
-                ->select('requestor_rooms.*', 'rooms.name')
-                ->where('requestor_rooms.date', '=', '2023-02-22')
+        // $tableBData = DB::table('requestor_rooms')
+        //         ->join('rooms', 'requestor_rooms.id_rooms', '=', 'rooms.id')
+        //         ->select('requestor_rooms.*', 'rooms.name')
+        //         ->where('requestor_rooms.date', '=', '2023-02-22')
+        //         ->get();
+
+        $data = DB::table('requestor_rooms')
+                ->leftJoin('rooms', 'requestor_rooms.id_rooms', '=', 'rooms.id')
+                ->leftJoin('images', 'images.id_rooms', '=', 'rooms.id')
+                ->select('requestor_rooms.*', 'rooms.name', 'images.filename')
                 ->get();
 
-        return $tableBData;
+        return $data;
+        // return $tableBData;
         // return $show_request->all();
     }
 
@@ -76,14 +83,14 @@ class RequestorRoomController extends Controller
         // dd($book_number);
 
         $request_form = RequestorRoom::create([
-            'booking_code' => $book_number,
-            'room_id' => $request->input('inputIdRoom'),
+            'order_number' => $book_number,
+            'id_rooms' => $request->input('inputIdRoom'),
             'name_requestor' => $request->input('inputNama'),
             'date' => $request->input('inputTglPesan'),
             'time' => $request->input('inputWktMulai'),
             'unit' => $request->input('inputUnit'),
             'telephone' => $request->input('inputNoTelp'),
-            'participant' => $request->input('inputJmlPeserta'),
+            'total_participants' => $request->input('inputJmlPeserta'),
         ]);
 
         // $check = gettype($request->input('time'));
