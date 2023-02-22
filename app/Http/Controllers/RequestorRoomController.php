@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Str;
 use App\Models\RequestorRoom;
+use App\Models\Room;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 
 class RequestorRoomController extends Controller
 {
@@ -18,8 +20,21 @@ class RequestorRoomController extends Controller
     {
         //
         $show_request = RequestorRoom::all(['*']);
+        // $test = Room::with(['requestRoom' => function ($query) {
+        //     $query->where('date', '=', '2023-02-22');
+        // }])->get();
+        $test = Room::with(['requestRoom' => function ($query) {
+            $query->where('date', '=', '2023-02-22');
+        }])->get();
 
-        return $show_request->all();
+        $tableBData = DB::table('requestor_rooms')
+                ->join('rooms', 'requestor_rooms.id_rooms', '=', 'rooms.id')
+                ->select('requestor_rooms.*', 'rooms.name')
+                ->where('requestor_rooms.date', '=', '2023-02-22')
+                ->get();
+
+        return $tableBData;
+        // return $show_request->all();
     }
 
     /**
@@ -89,6 +104,9 @@ class RequestorRoomController extends Controller
     public function show()
     {
         //
+        $requests = Room::with('requestRoom')->get();
+
+        return $requests;
     }
 
     /**

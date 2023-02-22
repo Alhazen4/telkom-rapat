@@ -17,6 +17,8 @@ return new class extends Migration
     {
         Schema::create('requestor_rooms', function (Blueprint $table) {
             $table->id('id_requests');
+            $table->unsignedBigInteger('id_rooms');
+            $table->foreign('id_rooms')->references('id')->on('rooms');
             $table->string('order_number');
             $table->string('name_requestor');
             $table->date('date');
@@ -25,10 +27,7 @@ return new class extends Migration
             $table->string('telephone');
             $table->integer('total_participants');
             $table->string('status');
-            $table->unsignedBigInteger('room_id');
             $table->timestamps();
-
-            $table->foreign('room_id')->references('id_rooms')->on('rooms')->onDelete('cascade');
         });
     }
 

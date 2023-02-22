@@ -25,9 +25,9 @@ class RequestorRoom extends Model
         'status' => 1
     ];
 
-    public function Room()
+    public function room()
     {
-        return $this->belongsToMany(Room::class);
+        return $this->belongsToMany(Room::class, 'id_rooms');
     }
 
 }

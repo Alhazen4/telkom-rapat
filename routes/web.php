@@ -6,6 +6,7 @@ use App\Http\Controllers\RoomController;
 use App\Http\Controllers\VerifController;
 use App\Http\Controllers\WaClientController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\RequestorRoomController;
 
 /*
@@ -32,3 +33,5 @@ Route::get('/history', [RequestorRoomController::class, 'index']);
 Route::get('/waclient', [WaClientController::class, 'getQrCode']);
 
 Route::get('/verif', [VerifController::class, 'index']);
+
+Route::get('/test', [RequestorRoomController::class, 'index']);

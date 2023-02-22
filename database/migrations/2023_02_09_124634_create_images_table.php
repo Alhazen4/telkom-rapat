@@ -15,11 +15,10 @@ return new class extends Migration
     {
         Schema::create('images', function (Blueprint $table) {
             $table->id('id_images');
+            $table->unsignedBigInteger('id_rooms');
+            $table->foreign('id_rooms')->references('id')->on('rooms');
             $table->string('filename');
-            $table->unsignedBigInteger('room_id');
             $table->timestamps();
-
-            $table->foreign('room_id')->references('id_rooms')->on('rooms')->onDelete('cascade');
         });
     }
 

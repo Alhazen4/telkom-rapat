@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Image;
+use App\Models\Room;
 use Illuminate\Http\Request;
 
 class ImageController extends Controller
@@ -15,6 +16,9 @@ class ImageController extends Controller
     public function index()
     {
         //
+        $rooms = Room::with('image')->get();
+
+        return $rooms;
     }
 
     /**
