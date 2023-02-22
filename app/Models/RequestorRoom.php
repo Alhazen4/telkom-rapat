@@ -10,10 +10,11 @@ class RequestorRoom extends Model
     use HasFactory;
 
     protected $fillable = [
-        'order_number',
+        'booking_code',
         'name_requestor',
         'date',
-        'time',
+        'time_start',
+        'time_end',
         'unit',
         'telephone',
         'status',
@@ -22,7 +23,7 @@ class RequestorRoom extends Model
 
     protected $attributes = [
         'total_participants' => 1,
-        'status' => 1
+        'status' => 'pending'
     ];
 
     public function room()

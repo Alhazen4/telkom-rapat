@@ -93,7 +93,8 @@ class RoomController extends Controller
     public function getRoom(Request $req) {
         $id = $req->id_rooms;
         // $selectedRoom = Room::find($id);
-        $selectedRoom = Room::where('id_rooms', $id)->get();
+        // $selectedRoom = Room::where('id', $id)->get();
+        $selectedRoom = Room::with('image')->where('id', '=', $id)->get();
 
         return response()->json(['status_code' => '200', 'data' => $selectedRoom]);
     }

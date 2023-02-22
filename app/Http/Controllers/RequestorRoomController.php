@@ -16,9 +16,12 @@ class RequestorRoomController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
+
+        $date = $request->date;
+        // $date = '2023-02-22';
         // $show_request = RequestorRoom::all(['*']);
         // $test = Room::with(['requestRoom' => function ($query) {
         //     $query->where('date', '=', '2023-02-22');
@@ -37,6 +40,8 @@ class RequestorRoomController extends Controller
                 ->leftJoin('rooms', 'requestor_rooms.id_rooms', '=', 'rooms.id')
                 ->leftJoin('images', 'images.id_rooms', '=', 'rooms.id')
                 ->select('requestor_rooms.*', 'rooms.name', 'images.filename')
+                ->where('requestor_rooms.date', '=', $date)
+                ->orderBy('requestor_rooms.time', 'asc')      // tambah where conditional untuk filtering per load
                 ->get();
 
         return $data;
@@ -83,11 +88,12 @@ class RequestorRoomController extends Controller
         // dd($book_number);
 
         $request_form = RequestorRoom::create([
-            'order_number' => $book_number,
+            'booking_code' => $book_number,
             'id_rooms' => $request->input('inputIdRoom'),
             'name_requestor' => $request->input('inputNama'),
             'date' => $request->input('inputTglPesan'),
-            'time' => $request->input('inputWktMulai'),
+            'time_start' => $request->input('inputWktMulai'),
+            'time_end' => $request->input('inputWktAkhir'),
             'unit' => $request->input('inputUnit'),
             'telephone' => $request->input('inputNoTelp'),
             'total_participants' => $request->input('inputJmlPeserta'),
