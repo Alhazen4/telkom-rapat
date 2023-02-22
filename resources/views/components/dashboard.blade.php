@@ -151,12 +151,10 @@
                     <div class="row-wrapper" style="display: flex; flex-direction:column;">
                         <label for="form-select">Pilih Tanggal</label>
                         <select name="form-select" class="form-select" id="selectDate" aria-label="Default select example">
-                            {{-- @for ($i = 1; $i <= 31; $i++)
-                                <option>{{ $i }}</option>
-                            @endfor --}}
                         </select>
                     </div>
                 </div>
+
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane fade show active" id="1">
                         <table class="table">
@@ -173,7 +171,7 @@
                                 @for ($i = 0; $i < count($requests); $i++)
                                     <tr>
                                         <th scope="row">{{ $i + 1 }}</th>
-                                        <td>{{ $requests[$i]->room_id }}</td>
+                                        <td>{{ $requests[$i]->name }}</td>
                                         <td>{{ $requests[$i]->name_requestor }}</td>
                                         <td>{{ $requests[$i]->telephone }}</td>
                                         <td>{{ $requests[$i]->time }}</td>
@@ -195,7 +193,6 @@
             <div class="div-card">
                 <div class="row row-cols-1 row-cols-md-3">
                     @foreach ($rooms as $room)
-                        {{-- The x-card component's controller is at App/View/Components/Card.php --}}
                         <div class="col mb-4">
                             <x-card :room=$room />
                         </div>
@@ -315,6 +312,14 @@
     $('#selectYear').on('change', function() {
         let optionSelected = $("option:selected", this);
         selectedYear = this.value;
+        $.ajax({
+            url: "{{ route('room.getRoom') }}",
+            type: 'GET',
+            data: {"id_rooms": id},
+            success: function(result){
+                global_adminPhone = result.data[0].contact;
+            }
+        });
         console.log(`${selectedYear}-${selectedMonth}-${selectedDate}`);
     })
 
