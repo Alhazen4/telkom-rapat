@@ -57,10 +57,10 @@
     .tab-content {
         padding: 20px;
         width: 100%;
-        height: auto;
+        height: 470px;
+        overflow-y: scroll;
         border: 1px solid lightgrey;
-        border-bottom-left-radius: 5px;
-        border-bottom-right-radius: 5px;
+        border-radius: 5px;
     }
 
     .form-select {
@@ -140,27 +140,20 @@
                 <div class="wrapper" style="display: flex; flex-direction:row; gap: 10px;">
                     <div class="row-wrapper" style="display: flex; flex-direction:column;">
                         <label for="form-select">Pilih Tahun</label>
-                        <select name="form-select" class="form-select" aria-label="Default select example">
-                            @for ($i = 2023; $i <= 2030; $i++)
-                                <option>{{ $i }}</option>
-                            @endfor
+                        <select name="form-select" class="form-select" id="selectYear" aria-label="Default select example">
                         </select>
                     </div>
                     <div class="row-wrapper" style="display: flex; flex-direction:column;">
                         <label for="form-select">Pilih Bulan</label>
-                        <select name="form-select" class="form-select" aria-label="Default select example">
-                            <option>Januari</option>
-                            <option value="1">Februari</option>
-                            <option value="2">Maret</option>
-                            <option value="3">April</option>
+                        <select name="form-select" class="form-select" id="selectMonth" aria-label="Default select example">
                         </select>
                     </div>
                     <div class="row-wrapper" style="display: flex; flex-direction:column;">
                         <label for="form-select">Pilih Tanggal</label>
-                        <select name="form-select" class="form-select" aria-label="Default select example">
-                            @for ($i = 1; $i <= 31; $i++)
+                        <select name="form-select" class="form-select" id="selectDate" aria-label="Default select example">
+                            {{-- @for ($i = 1; $i <= 31; $i++)
                                 <option>{{ $i }}</option>
-                            @endfor
+                            @endfor --}}
                         </select>
                     </div>
                 </div>
@@ -177,7 +170,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {{-- @foreach ($requests as $request) --}}
                                 @for ($i = 0; $i < count($requests); $i++)
                                     <tr>
                                         <th scope="row">{{ $i + 1 }}</th>
@@ -187,16 +179,6 @@
                                         <td>{{ $requests[$i]->time }}</td>
                                     </tr>
                                 @endfor
-                                {{-- @for ($i = 1; $i <= 10; $i++)
-                                    <tr>
-                                        <th scope="row">{{$i}}</th>
-                                        <td>{{$requests['8']}}</td>
-                                        <td>{{$requests['8']}}</td>
-                                        <td>{{$requests['8']}}</td>
-                                        <td>{{$requests['8']}}</td>
-                                    </tr>
-                                @endfor --}}
-                                {{-- @endforeach --}}
                             </tbody>
                         </table>
                     </div>
@@ -228,4 +210,131 @@
     </footer>
 
 </body>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    let date = new Date();
+    let yearRange = [];
+    let startYear = 2023;
+    let currentYear = date.getFullYear();
+    // let currentYear = 2024;
+
+    while (startYear <= currentYear) {
+        yearRange.push(startYear++);
+    }
+
+    $.each(yearRange, function (i, item) {
+        if(currentYear === item) {
+            $('#selectYear').append($('<option>', {
+                value: item,
+                text : item
+            }).prop("selected", true));
+        } else {
+            $('#selectYear').append($('<option>', {
+                value: item,
+                text : item
+            }));
+        }
+    });
+
+    const arrayMonth = [
+        "Januari",
+        "Februari",
+        "Maret",
+        "April",
+        "Mei",
+        "Juni",
+        "Juli",
+        "Agustus",
+        "September",
+        "Oktober",
+        "November",
+        "Desember"
+    ];
+
+    let currentMonth = arrayMonth[date.getMonth()];
+    // let currentMonth = 'Mei';
+
+    $.each(arrayMonth, function (i, item) {
+        if(currentMonth === item) {
+            $('#selectMonth').append($('<option>', {
+                value: item,
+                text : item
+            }).prop("selected", true));
+        } else {
+            $('#selectMonth').append($('<option>', {
+                value: item,
+                text : item
+            }));
+        }
+    });
+
+    let arrayDate = [];
+    function getDaysInMonth(month, year) {
+        let date = new Date(year, month);
+        while (date.getMonth() === month) {
+            // days.push(new Date(date));
+            arrayDate.push(date.getDate());
+            date.setDate(date.getDate() + 1);
+        }
+    }
+
+    let currentDate = date.getDate();
+    getDaysInMonth(date.getMonth(), date.getFullYear());
+
+    $.each(arrayDate, function (i, item) {
+        if(currentDate === item) {
+            $('#selectDate').append($('<option>', {
+                value: item,
+                text : item
+            }).prop("selected", true));
+        } else {
+            $('#selectDate').append($('<option>', {
+                value: item,
+                text : item
+            }));
+        }
+    });
+
+    let selectedYear;
+    let selectedMonth;
+    let selectedDate;
+
+    if (selectedYear === undefined) {
+        selectedYear =$('#selectYear').find(":selected").val();
+    }
+
+    if (selectedMonth === undefined) {
+        selectedMonth =$('#selectMonth').find(":selected").val();
+    }
+
+    if (selectedDate === undefined) {
+        selectedDate =$('#selectDate').find(":selected").val();
+    }
+
+    $('#selectYear').on('change', function() {
+        let optionSelected = $("option:selected", this);
+        selectedYear = this.value;
+        console.log(selectedYear, selectedMonth, selectedDate);
+    })
+
+    $('#selectMonth').on('change', function() {
+        let optionSelected = $("option:selected", this);
+        selectedMonth = this.value;
+        console.log(selectedYear, selectedMonth, selectedDate);
+    })
+
+    $('#selectDate').on('change', function() {
+        let optionSelected = $("option:selected", this);
+        selectedDate = this.value;
+        console.log(selectedYear, selectedMonth, selectedDate);
+    })
+
+    $( document ).ready(function() {
+        console.log(date.getDate());
+        console.log(date.getMonth());
+        console.log(date.getFullYear());
+    });
+
+</script>
 </html>
