@@ -238,18 +238,18 @@
     });
 
     const arrayMonth = [
-        "Januari",
-        "Februari",
-        "Maret",
-        "April",
-        "Mei",
-        "Juni",
-        "Juli",
-        "Agustus",
-        "September",
-        "Oktober",
-        "November",
-        "Desember"
+        {value: 1, text: 'Januari'},
+        {value: 2, text: 'Februari'},
+        {value: 3, text: 'Maret'},
+        {value: 4, text: 'April'},
+        {value: 5, text: 'Mei'},
+        {value: 6, text: 'Juni'},
+        {value: 7, text: 'Juli'},
+        {value: 8, text: 'Agustus'},
+        {value: 9, text: 'September'},
+        {value: 10, text: 'Oktober'},
+        {value: 11, text: 'November'},
+        {value: 12, text: 'Desember'}
     ];
 
     let currentMonth = arrayMonth[date.getMonth()];
@@ -258,13 +258,13 @@
     $.each(arrayMonth, function (i, item) {
         if(currentMonth === item) {
             $('#selectMonth').append($('<option>', {
-                value: item,
-                text : item
+                value: item.value,
+                text : item.text
             }).prop("selected", true));
         } else {
             $('#selectMonth').append($('<option>', {
-                value: item,
-                text : item
+                value: item.value,
+                text : item.text
             }));
         }
     });
@@ -315,19 +315,19 @@
     $('#selectYear').on('change', function() {
         let optionSelected = $("option:selected", this);
         selectedYear = this.value;
-        console.log(selectedYear, selectedMonth, selectedDate);
+        console.log(`${selectedYear}-${selectedMonth}-${selectedDate}`);
     })
 
     $('#selectMonth').on('change', function() {
         let optionSelected = $("option:selected", this);
         selectedMonth = this.value;
-        console.log(selectedYear, selectedMonth, selectedDate);
+        console.log(`${selectedYear}-${selectedMonth}-${selectedDate}`);
     })
 
     $('#selectDate').on('change', function() {
         let optionSelected = $("option:selected", this);
         selectedDate = this.value;
-        console.log(selectedYear, selectedMonth, selectedDate);
+        console.log(`${selectedYear}-${selectedMonth}-${selectedDate}`);
     })
 
     $( document ).ready(function() {
