@@ -13,7 +13,8 @@ class RequestorRoom extends Model
         'order_number',
         'name_requestor',
         'date',
-        'time',
+        'time_start',
+        'time_end',
         'unit',
         'telephone',
         'status',
@@ -22,7 +23,7 @@ class RequestorRoom extends Model
 
     protected $attributes = [
         'total_participants' => 1,
-        'status' => 1
+        'status' => 'pending'
     ];
 
     public function room()

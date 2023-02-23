@@ -1,7 +1,7 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <body>
     <div class="card w-100">
-        <img class="card-img" src={{ "https://source.unsplash.com/" . $room["image"] }} alt="...">
+        <img class="card-img" src={{ "https://source.unsplash.com/" . $room["filename"] }} alt={{$room["filename"]}}>
 
         {{-- Use below code if we want to access the images inside public/images --}}
         {{-- <img class="card-img" src={{ asset("/images/" . $room["photo"])}} alt="..."> --}}
@@ -117,7 +117,7 @@
                 // document.getElementById('roomPhoto').src = `{{ asset("images/` + result.data.photo + `")}}`;
 
                 // Use below code if we want to get the images from API url
-                document.getElementById('roomPhoto').src = `https://source.unsplash.com/${result.data[0].image}`;
+                document.getElementById('roomPhoto').src = `https://source.unsplash.com/${result.data[0].image[0].filename}`;
 
                 document.getElementById('roomName').innerHTML = result.data[0].name;
                 document.getElementById('roomDetail').innerHTML = "Detail:<br>" + result.data[0].facility;

@@ -16,24 +16,36 @@ class RequestorRoomController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        $show_request = RequestorRoom::all(['*']);
+
+        $date = $request->date;
+        // $date = '2023-02-22';
+        // $show_request = RequestorRoom::all(['*']);
         // $test = Room::with(['requestRoom' => function ($query) {
         //     $query->where('date', '=', '2023-02-22');
         // }])->get();
-        $test = Room::with(['requestRoom' => function ($query) {
-            $query->where('date', '=', '2023-02-22');
-        }])->get();
+        // $test = Room::with(['requestRoom' => function ($query) {
+        //     $query->where('date', '=', '2023-02-22');
+        // }])->get();
 
-        $tableBData = DB::table('requestor_rooms')
-                ->join('rooms', 'requestor_rooms.id_rooms', '=', 'rooms.id')
-                ->select('requestor_rooms.*', 'rooms.name')
-                ->where('requestor_rooms.date', '=', '2023-02-22')
+        // $tableBData = DB::table('requestor_rooms')
+        //         ->join('rooms', 'requestor_rooms.id_rooms', '=', 'rooms.id')
+        //         ->select('requestor_rooms.*', 'rooms.name')
+        //         ->where('requestor_rooms.date', '=', '2023-02-22')
+        //         ->get();
+
+        $data = DB::table('requestor_rooms')
+                ->leftJoin('rooms', 'requestor_rooms.id_rooms', '=', 'rooms.id')
+                ->leftJoin('images', 'images.id_rooms', '=', 'rooms.id')
+                ->select('requestor_rooms.*', 'rooms.name', 'images.filename')
+                ->where('requestor_rooms.date', '=', $date)
+                ->orderBy('requestor_rooms.time', 'asc')      // tambah where conditional untuk filtering per load
                 ->get();
 
-        return $tableBData;
+        return $data;
+        // return $tableBData;
         // return $show_request->all();
     }
 
@@ -76,13 +88,12 @@ class RequestorRoomController extends Controller
         // dd($book_number);
 
         $request_form = RequestorRoom::create([
-            // 'booking_code' => $book_number,
-            'order_number' => $book_number,
-            // 'room_id' => $request->input('inputIdRoom'),
+            'booking_code' => $book_number,
             'id_rooms' => $request->input('inputIdRoom'),
             'name_requestor' => $request->input('inputNama'),
             'date' => $request->input('inputTglPesan'),
-            'time' => $request->input('inputWktMulai'),
+            'time_start' => $request->input('inputWktMulai'),
+            'time_end' => $request->input('inputWktAkhir'),
             'unit' => $request->input('inputUnit'),
             'telephone' => $request->input('inputNoTelp'),
             'total_participants' => $request->input('inputJmlPeserta'),

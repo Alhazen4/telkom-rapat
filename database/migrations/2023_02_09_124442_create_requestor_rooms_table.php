@@ -19,10 +19,11 @@ return new class extends Migration
             $table->id('id_requests');
             $table->unsignedBigInteger('id_rooms');
             $table->foreign('id_rooms')->references('id')->on('rooms');
-            $table->string('order_number');
+            $table->string('booking_code');
             $table->string('name_requestor');
             $table->date('date');
-            $table->time('time');
+            $table->time('time_start');
+            $table->time('time_end');
             $table->string('unit');
             $table->string('telephone');
             $table->integer('total_participants');
