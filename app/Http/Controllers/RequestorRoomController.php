@@ -7,6 +7,7 @@ use App\Models\RequestorRoom;
 use App\Models\Room;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 
 class RequestorRoomController extends Controller
@@ -30,7 +31,6 @@ class RequestorRoomController extends Controller
 
         return response()->json(['status_code' => '200', 'data' => $data]);
     }
-
     /**
      * Show the form for creating a new resource.
      *

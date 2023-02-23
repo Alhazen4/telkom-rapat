@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 
@@ -151,12 +152,10 @@
                     <div class="row-wrapper" style="display: flex; flex-direction:column;">
                         <label for="form-select">Pilih Tanggal</label>
                         <select name="form-select" class="form-select" id="selectDate" aria-label="Default select example">
-                            {{-- @for ($i = 1; $i <= 31; $i++)
-                                <option>{{ $i }}</option>
-                            @endfor --}}
                         </select>
                     </div>
                 </div>
+
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane fade show active" id="1">
                         <table class="table">
@@ -166,7 +165,8 @@
                                     <th scope="col">Nama Ruangan</th>
                                     <th scope="col">Nama Pemesan</th>
                                     <th scope="col">Nomor Telepon</th>
-                                    <th scope="col">Waktu Pemakaian</th>
+                                    <th scope="col">Waktu Mulai</th>
+                                    <th scope="col">Waktu Selesai</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -177,6 +177,10 @@
                                         <td>{{ $requests[$i]->name_requestor }}</td>
                                         <td>{{ $requests[$i]->telephone }}</td>
                                         <td>{{ $requests[$i]->time_start }}</td>
+<<<<<<< HEAD
+=======
+                                        <td>{{ $requests[$i]->time_end }}</td>
+>>>>>>> c3db40f27d906a5a5cf829e134a7fd4469baf4cc
                                     </tr>
                                 @endfor --}}
                             </tbody>
@@ -195,7 +199,6 @@
             <div class="div-card">
                 <div class="row row-cols-1 row-cols-md-3">
                     @foreach ($rooms as $room)
-                        {{-- The x-card component's controller is at App/View/Components/Card.php --}}
                         <div class="col mb-4">
                             <x-card :room=$room />
                         </div>
@@ -366,6 +369,7 @@
         console.log(`${selectedYear}-${selectedMonth}-${selectedDate}`);
     })
 
+<<<<<<< HEAD
     $( document ).ready(function() {
         $.ajax({
             url: "{{ route('first') }}",
@@ -379,5 +383,7 @@
         console.log(date.getFullYear());
     });
 
+=======
+>>>>>>> c3db40f27d906a5a5cf829e134a7fd4469baf4cc
 </script>
 </html>

@@ -9,7 +9,7 @@ class DashboardController extends Controller
 {
     //
 
-    public function show() {
+    public function show(Request $request) {
         $RoomController = new RoomController();
         // $RequestoRoomController = new RequestorRoomController();
 
@@ -19,5 +19,6 @@ class DashboardController extends Controller
         $data = ['rooms' => $room_data];
         // dd(sizeof($request_data));
         return view('components.dashboard', $data);
+        // return view('components.dashboard');
     }
 }

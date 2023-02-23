@@ -11,7 +11,7 @@
                 <p class="card-text">Kapasitas: {{ $room["capacity"] }}</p>
                 <p class="card-text">Lokasi: {{ $room["location"] }}</p>
                 <p class="card-text">Kontak PJ Ruangan: {{ $room["contact"] }}</p>
-                {{-- <p class="card-text">id_room: {{ $room["id_rooms"] }}</p> --}}
+                {{-- <p class="card-text">id_room: {{ $room["id"] }}</p> --}}
                 <div style="display: flex; justify-content:space-between;">
                     <a data-id="{{ $room["id"] }}" onclick="detailRoom(event.target)" class="btn btn-primary">Detail Ruangan</a>
                     <a data-id="{{ $room["id"] }}" onclick="reserveRoom(event.target)" class="btn btn-success">Pesan Ruangan</a>
@@ -157,13 +157,14 @@
     }
 
     let actionUrl = form.attr('action');
+
         $.ajax({
             type: "POST",
             url: actionUrl,
             data: form.serialize(), // serializes the form's elements.
             success: function(data)
             {
-                let booking_code = data.data.booking_code;
+                let booking_code = data.data.order_number;
                 // Send WA and the booking_code to requestor.
                 $.ajax({
                     type: "POST",
@@ -182,14 +183,15 @@
                 })
 
                 // Send WA and the booking_code to room admin.
-                let urlVerif = `https://localhost:8000/${booking_code}`;
+                // let urlVerif = `https://localhost:8000/${booking_code}`;
+                let urlVerif = `https://youtube.com/`;
                 $.ajax({
                     type: "POST",
                     url: 'http://localhost:1221/sendWaVerif',
                     contentType: "application/json; charset=utf-8",
                     data: JSON.stringify({
-                        noTelp: global_adminPhone,
-                        // noTelp: '6281291572472',
+                        // noTelp: global_adminPhone,
+                        noTelp: '6281291572472',
                         // noTelp: '6287870539398',
                         message: `Pesanan dengan kode *${booking_code}* menunggu verifikasi Anda.\n\nKlik link dibawah ini untuk memverifikasi pesanan tersebut\n\n ${urlVerif} \n\nTerima kasih!\n\n_(Jika link tidak aktif (tidak bisa ditekan), balas chat ini dengan kata !aktifkan)_`
                     }),
