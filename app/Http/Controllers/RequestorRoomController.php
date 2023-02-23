@@ -16,37 +16,19 @@ class RequestorRoomController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        //
-
-        $date = $request->date;
-        // $date = '2023-02-22';
-        // $show_request = RequestorRoom::all(['*']);
-        // $test = Room::with(['requestRoom' => function ($query) {
-        //     $query->where('date', '=', '2023-02-22');
-        // }])->get();
-        // $test = Room::with(['requestRoom' => function ($query) {
-        //     $query->where('date', '=', '2023-02-22');
-        // }])->get();
-
-        // $tableBData = DB::table('requestor_rooms')
-        //         ->join('rooms', 'requestor_rooms.id_rooms', '=', 'rooms.id')
-        //         ->select('requestor_rooms.*', 'rooms.name')
-        //         ->where('requestor_rooms.date', '=', '2023-02-22')
-        //         ->get();
+        $date = date('Y-m-d');
 
         $data = DB::table('requestor_rooms')
                 ->leftJoin('rooms', 'requestor_rooms.id_rooms', '=', 'rooms.id')
                 ->leftJoin('images', 'images.id_rooms', '=', 'rooms.id')
                 ->select('requestor_rooms.*', 'rooms.name', 'images.filename')
                 ->where('requestor_rooms.date', '=', $date)
-                ->orderBy('requestor_rooms.time', 'asc')      // tambah where conditional untuk filtering per load
+                ->orderBy('requestor_rooms.time_start', 'asc')      // tambah where conditional untuk filtering per load
                 ->get();
 
-        return $data;
-        // return $tableBData;
-        // return $show_request->all();
+        return response()->json(['status_code' => '200', 'data' => $data]);
     }
 
     /**
@@ -114,12 +96,24 @@ class RequestorRoomController extends Controller
      * @param  \App\Models\RequestorRoom  $requestorRoom
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show(Request $request)
     {
         //
-        $requests = Room::with('requestRoom')->get();
+        // $requests = Room::with('requestRoom')->get();
+        $date = $request->date;
+        // dd($date);
+        // $selectedRoom = Room::find($id);
+        // $selectedRoom = Room::where('id', $id)->get();
+        $data = DB::table('requestor_rooms')
+                ->leftJoin('rooms', 'requestor_rooms.id_rooms', '=', 'rooms.id')
+                ->leftJoin('images', 'images.id_rooms', '=', 'rooms.id')
+                ->select('requestor_rooms.*', 'rooms.name', 'images.filename')
+                ->where('requestor_rooms.date', '=', $date)
+                ->orderBy('requestor_rooms.time_start', 'asc')      // tambah where conditional untuk filtering per load
+                ->get();
 
-        return $requests;
+        return response()->json(['status_code' => '200', 'data' => $data]);
+        // return $requests;
     }
 
     /**
@@ -154,6 +148,29 @@ class RequestorRoomController extends Controller
     public function destroy(RequestorRoom $requestorRoom)
     {
         //
+    }
+
+    public function checkTime()
+    {
+        $date = '2023-02-23';
+        $timeStart = '18:00:00';
+        $timeEnd = '19:00:00';
+
+        // $validateTime = DB::table('requetor_rooms')
+        // ->where('date', '=', $date)
+        // ->whereBetween(['time_start', 'end_date'], [$timeStart, $timeEnd])
+        // ->get();
+
+        $validateTime = DB::table('requestor_rooms')
+              ->where('time_start', '=', '18:00:00')
+              ->orWhere('time_end', '20:00:00')
+              ->get();
+        // if($validateTime == [])
+        // {
+
+        // }
+
+        return $validateTime;
     }
 
     // public $middleware = [

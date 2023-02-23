@@ -11,12 +11,12 @@ class DashboardController extends Controller
 
     public function show() {
         $RoomController = new RoomController();
-        $RequestoRoomController = new RequestorRoomController();
+        // $RequestoRoomController = new RequestorRoomController();
 
         $room_data = $RoomController->show();
-        $request_data = $RequestoRoomController->index();
+        // $request_data = $RequestoRoomController->index();
 
-        $data = ['rooms' => $room_data, 'requests' => $request_data];
+        $data = ['rooms' => $room_data];
         // dd(sizeof($request_data));
         return view('components.dashboard', $data);
     }

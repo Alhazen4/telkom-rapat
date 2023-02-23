@@ -170,15 +170,15 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @for ($i = 0; $i < count($requests); $i++)
+                                {{-- @for ($i = 0; $i < count($requests); $i++)
                                     <tr>
                                         <th scope="row">{{ $i + 1 }}</th>
                                         <td>{{ $requests[$i]->name }}</td>
                                         <td>{{ $requests[$i]->name_requestor }}</td>
                                         <td>{{ $requests[$i]->telephone }}</td>
-                                        <td>{{ $requests[$i]->time }}</td>
+                                        <td>{{ $requests[$i]->time_start }}</td>
                                     </tr>
-                                @endfor
+                                @endfor --}}
                             </tbody>
                         </table>
                     </div>
@@ -238,19 +238,19 @@
     });
 
     const arrayMonth = [
-        {value: 1, text: 'Januari'},
-        {value: 2, text: 'Februari'},
-        {value: 3, text: 'Maret'},
-        {value: 4, text: 'April'},
-        {value: 5, text: 'Mei'},
-        {value: 6, text: 'Juni'},
-        {value: 7, text: 'Juli'},
-        {value: 8, text: 'Agustus'},
-        {value: 9, text: 'September'},
+        {value: 01, text: 'Januari'},
+        {value: 02, text: 'Februari'},
+        {value: 03, text: 'Maret'},
+        {value: 04, text: 'April'},
+        {value: 05, text: 'Mei'},
+        {value: 06, text: 'Juni'},
+        {value: 07, text: 'Juli'},
+        {value: 08, text: 'Agustus'},
+        {value: 09, text: 'September'},
         {value: 10, text: 'Oktober'},
         {value: 11, text: 'November'},
         {value: 12, text: 'Desember'}
-    ];
+    ]
 
     let currentMonth = arrayMonth[date.getMonth()];
     // let currentMonth = 'Mei';
@@ -315,22 +315,65 @@
     $('#selectYear').on('change', function() {
         let optionSelected = $("option:selected", this);
         selectedYear = this.value;
+        $.ajax({
+            url: "{{ route('history') }}",
+            type: 'GET',
+            data: {
+                "date": `${selectedYear}-${selectedMonth}-${selectedDate}`,
+                // "date": `2023-2-22`,
+            },
+            success: function(result){
+                console.log(result.data);
+
+            }
+        });
         console.log(`${selectedYear}-${selectedMonth}-${selectedDate}`);
     })
 
     $('#selectMonth').on('change', function() {
         let optionSelected = $("option:selected", this);
         selectedMonth = this.value;
+        $.ajax({
+            url: "{{ route('history') }}",
+            type: 'GET',
+            data: {
+                "date": `${selectedYear}-${selectedMonth}-${selectedDate}`,
+                // "date": `2023-2-22`,
+            },
+            success: function(result){
+                console.log(result.data);
+
+            }
+        });
         console.log(`${selectedYear}-${selectedMonth}-${selectedDate}`);
     })
 
     $('#selectDate').on('change', function() {
         let optionSelected = $("option:selected", this);
         selectedDate = this.value;
+        $.ajax({
+            url: "{{ route('history') }}",
+            type: 'GET',
+            data: {
+                "date": `${selectedYear}-${selectedMonth}-${selectedDate}`,
+                // "date": `2023-2-22`,
+            },
+            success: function(result){
+                console.log(result.data);
+
+            }
+        });
         console.log(`${selectedYear}-${selectedMonth}-${selectedDate}`);
     })
 
     $( document ).ready(function() {
+        $.ajax({
+            url: "{{ route('first') }}",
+            type: 'GET',
+            success: function(result){
+                console.log(result);
+            }
+        });
         console.log(date.getDate());
         console.log(date.getMonth());
         console.log(date.getFullYear());
