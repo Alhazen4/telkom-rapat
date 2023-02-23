@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 
@@ -164,7 +165,8 @@
                                     <th scope="col">Nama Ruangan</th>
                                     <th scope="col">Nama Pemesan</th>
                                     <th scope="col">Nomor Telepon</th>
-                                    <th scope="col">Waktu Pemakaian</th>
+                                    <th scope="col">Waktu Mulai</th>
+                                    <th scope="col">Waktu Selesai</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -174,7 +176,8 @@
                                         <td>{{ $requests[$i]->name }}</td>
                                         <td>{{ $requests[$i]->name_requestor }}</td>
                                         <td>{{ $requests[$i]->telephone }}</td>
-                                        <td>{{ $requests[$i]->time }}</td>
+                                        <td>{{ $requests[$i]->time_start }}</td>
+                                        <td>{{ $requests[$i]->time_end }}</td>
                                     </tr>
                                 @endfor
                             </tbody>
@@ -312,14 +315,6 @@
     $('#selectYear').on('change', function() {
         let optionSelected = $("option:selected", this);
         selectedYear = this.value;
-        $.ajax({
-            url: "{{ route('room.getRoom') }}",
-            type: 'GET',
-            data: {"id_rooms": id},
-            success: function(result){
-                global_adminPhone = result.data[0].contact;
-            }
-        });
         console.log(`${selectedYear}-${selectedMonth}-${selectedDate}`);
     })
 
@@ -334,12 +329,6 @@
         selectedDate = this.value;
         console.log(`${selectedYear}-${selectedMonth}-${selectedDate}`);
     })
-
-    $( document ).ready(function() {
-        console.log(date.getDate());
-        console.log(date.getMonth());
-        console.log(date.getFullYear());
-    });
 
 </script>
 </html>

@@ -7,6 +7,7 @@ use App\Models\RequestorRoom;
 use App\Models\Room;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 
 class RequestorRoomController extends Controller
@@ -18,10 +19,11 @@ class RequestorRoomController extends Controller
      */
     public function index(Request $request)
     {
-        //
-
-        $date = $request->date;
+        // var_dump($request);
+        // $date = $request->data;
         // $date = '2023-02-22';
+        $date = date('Y-m-d');
+
         // $show_request = RequestorRoom::all(['*']);
         // $test = Room::with(['requestRoom' => function ($query) {
         //     $query->where('date', '=', '2023-02-22');
@@ -41,14 +43,13 @@ class RequestorRoomController extends Controller
                 ->leftJoin('images', 'images.id_rooms', '=', 'rooms.id')
                 ->select('requestor_rooms.*', 'rooms.name', 'images.filename')
                 ->where('requestor_rooms.date', '=', $date)
-                ->orderBy('requestor_rooms.time', 'asc')      // tambah where conditional untuk filtering per load
+                ->orderBy('requestor_rooms.time_start', 'asc')      // tambah where conditional untuk filtering per load
                 ->get();
 
         return $data;
         // return $tableBData;
         // return $show_request->all();
     }
-
     /**
      * Show the form for creating a new resource.
      *

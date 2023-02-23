@@ -28,10 +28,11 @@ Route::get('/request', [RequestorRoomController::class, 'create'])->name('form.c
 
 Route::post('/request', [RequestorRoomController::class, 'store'])->name('form.store');
 
-Route::get('/history', [RequestorRoomController::class, 'index']);
+Route::get('/history', [RequestorRoomController::class, 'index'])->name('history');
 
 Route::get('/waclient', [WaClientController::class, 'getQrCode']);
 
 Route::get('/verif', [VerifController::class, 'index']);
 
 Route::get('/test', [RequestorRoomController::class, 'index']);
+// Route::get('/test', [RoomController::class, 'show']);
